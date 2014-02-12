@@ -1,0 +1,71 @@
+=== EE450 SOCKET PROGRAMMING PROJECT ===
+
+	Full Name: Jie Gu
+	Student ID: 7136721374
+
+=== DESCRIPTION ===
+
+In this project, a file server-client model was designed, it consists
+	of one directory server who collects information from three File Servers
+	record their TCP port and read two txt files that contain all routing
+	and resource information.
+	
+	And two clients who will contact directory server to request a file, the
+	directory server will send Server information back, then clients will
+	communicate with File Servers through TCP ports
+	
+=== FILES ===
+
+	directory_server.c			....directory server who coordinates and relay information
+	
+	file_server1.c				....file server files responsible for register with directory
+	file_server2.c						server and communicate with clients
+	file_server3.c
+	
+	client1.c					....client files that request 'doc'
+	client2.c
+	
+	Makefile					....make file that compile all codes and do the cleaning
+	
+=== HOW TO RUN CODE ===
+
+	1. Copy all *.c files, Makefile and resource.txt/topology.txt into same directory
+	2. type "make clean" to clean any previous compiled files
+	3. type "make all" to compile all files
+	4. Open 6 terminal windows for directory_server, three file_servers, two clients
+	5. Run following commands in order (one command per terminal):
+			directory_server
+			file_server1
+			file_server2
+			file_server3
+			client1
+			client2
+	6. file_server will automatically terminate, must use Ctrl+C
+	
+=== MESSAGES EXCHANGED ===
+
+	File Server	=>	Directory Server	...		File_Server# TCP_Port_No
+	File Server	<=	Directory Server	...		ACK
+	
+	Client	=>	Directory Server		...		Client# doc#
+	Client	<=	Directory Server		...		File_Server# TCP_Port_No
+	
+	Client	=>	File Server				...		Client# doc#
+	Client	<=	File Server				...		doc#
+	
+=== UNEXPECTED BEHAVIOUR ===
+
+	if the resource file format as following (doc1 does not exist):
+		
+		File_Server1 1 doc2
+		File_Server2 1 doc2
+		File_Server3 1 doc2
+	
+	Then an error message will print "ERROR: Requested doc# does not exist on any of the registered servers."
+	
+=== REFERENCE ===
+
+	[1] Beej's Guide to Network Programming - Using Internet Sockets, "http://www.beej.us/guide/bgnet/output/html/multipage/index.html"
+	[2] Introduction to Sockets Programming, "http://www.cs.rutgers.edu/~pxk/rutgers/notes/sockets/"
+
+	
